@@ -29,6 +29,9 @@ if ($result->num_rows > 0) {
 
 <body>
    <div class="container">
+      <div>
+         Toggle column: <a class="toggle-vis" data-column="0">Results ID</a> - <a class="toggle-vis" data-column="1">Horse Record ID</a> - <a class="toggle-vis" data-column="2">Horse</a> - <a class="toggle-vis" data-column="3">Year</a> - <a class="toggle-vis" data-column="4">Show Name</a> - <a class="toggle-vis" data-column="5">Class</a> - <a class="toggle-vis" data-column="6">Age</a> - <a class="toggle-vis" data-column="7">Rider</a> - <a class="toggle-vis" data-column="8">Owner</a> - <a class="toggle-vis" data-column="9">Score</a> - <a class="toggle-vis" data-column="10">Place</a> - <a class="toggle-vis" data-column="11">Earned</a> - <a class="toggle-vis" data-column="12">ASSN</a> - <a class="toggle-vis" data-column="13">Sire</a> - <a class="toggle-vis" data-column="14">Dam</a> - <a class="toggle-vis" data-column="15">Breeder</a> - <a class="toggle-vis" data-column="16">YF</a> - <a class="toggle-vis" data-column="17">Color</a> - <a class="toggle-vis" data-column="18">Sex</a> - <a class="toggle-vis" data-column="19">Breed</a> - <a class="toggle-vis" data-column="20">Horse ID</a>
+      </div>
       <table id="contact-detail" class="display" cellspacing="0" width="100%">
          <thead>
             <tr>
@@ -88,29 +91,36 @@ if ($result->num_rows > 0) {
       </table>
    </div>
 </body>
+<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="https://cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js" type="text/javascript"></script>
 <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js" type="text/javascript"></script>
-<script src="https://cdn.jsdelivr.net/gh/jeffreydwalter/ColReorderWithResize@9ce30c640e394282c9e0df5787d54e5887bc8ecc/ColReorderWithResize.js"></script>
 
 <script>
    $(document).ready(function() {
       let table = $('#contact-detail').DataTable({
          'dom': 'Rlfrtip',
-         'colReorder': {
-            'allowReorder': false
-         },
          fixedHeader: true,
          fixedColumns: true,
-         columnDefs: [{
-               target: 2,
-               visible: false,
-            },
-            {
-               target: 3,
-               visible: false,
-            },
-         ],
+         "autoWidth": false,
+      });
+
+      $('table th').resizable({
+         handles: 'e',
+         stop: function(e, ui) {
+            $(this).width(ui.size.width);
+         }
+      });
+
+      $('a.toggle-vis').on('click', function(e) {
+         e.preventDefault();
+
+         // Get the column API object
+         var column = table.column($(this).attr('data-column'));
+
+         // Toggle the visibility
+         column.visible(!column.visible());
       });
    });
 </script>
