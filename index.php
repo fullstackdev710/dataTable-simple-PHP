@@ -14,8 +14,10 @@ if ($result->num_rows > 0) {
 
 <head>
    <title>Datatables</title>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+   <script src="https://code.jquery.com/jquery-3.6.4.min.js" crossorigin="anonymous"></script>
    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.3.2/css/fixedHeader.dataTables.min.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
    <link rel="stylesheet" href="style.css">
    <style>
       body {
@@ -27,7 +29,7 @@ if ($result->num_rows > 0) {
 
 <body>
    <div class="container">
-      <table id="contact-detail" class="display nowrap" cellspacing="0" width="100%">
+      <table id="contact-detail" class="display" cellspacing="0" width="100%">
          <thead>
             <tr>
                <th>Results ID</th>
@@ -86,14 +88,30 @@ if ($result->num_rows > 0) {
       </table>
    </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" type="text/javascript"></script>
-
+<script src="https://cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/gh/jeffreydwalter/ColReorderWithResize@9ce30c640e394282c9e0df5787d54e5887bc8ecc/ColReorderWithResize.js"></script>
 
 <script>
    $(document).ready(function() {
-      $('#contact-detail').DataTable({});
+      let table = $('#contact-detail').DataTable({
+         'dom': 'Rlfrtip',
+         'colReorder': {
+            'allowReorder': false
+         },
+         fixedHeader: true,
+         fixedColumns: true,
+         columnDefs: [{
+               target: 2,
+               visible: false,
+            },
+            {
+               target: 3,
+               visible: false,
+            },
+         ],
+      });
    });
 </script>
 <script src="script.js?ver=<?= time() ?>" type="text/javascript"></script>
